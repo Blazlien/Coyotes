@@ -31,6 +31,7 @@ class PortScanEngine
 				end
 			end
 		end
+		data << @targets.join()
 		return data
 	end
 
