@@ -24,12 +24,11 @@ class PortScanEngine
 				ranges.each do |range|
 					data << range.to_s
 				end
-			elsif target =~ /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
+			else
 				resolvs = Resolv.getaddresses(target)
 				resolvs.each do |resolv|
 					data << resolv
 				end
-			else
 				data << target
 			end
 		end
@@ -39,7 +38,7 @@ class PortScanEngine
 	def port_detection
 		dir_path = "#{@dir_root}/#{__method__}"
 		@project.mkdir(dir_path)
-		target_resolv.each do |target|
+		target_resolv.uniq.each do |target|
 			file_name = "nmap_port_scan-#{target}-#{@time}"
 			file_path = "#{dir_path}/#{file_name}"
 			puts "Execution: nmap #{@port_scan_arg} -oX #{file_path}.xml #{target} > #{file_path}"
