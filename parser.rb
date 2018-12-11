@@ -67,7 +67,3 @@ class Parser
 		#end
 	end
 end
-
-parser = Parser.new
-#p parser.port_scan
-p parser.report

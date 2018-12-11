@@ -6,16 +6,16 @@ require './project_creator'
 require 'resolv'
 
 class PortScanEngine
-	def initialize()
+	def initialize(targets)
 		@time_now = Time.new
 		@time = @time_now.strftime("%Y%m%d_%H%M")
 		@port_scan_arg = "-v3 -Pn -T5 -sU -sT"
-		@targets = ARGV
+		@targets = targets
 		@dir_root = "data"
 		@project = ProjectCreator.new
 	end
 
-	def target_resolv
+	def target_resolv()
 		data = []
 		@targets.each do |target|
 			if target =~ /\/[0-9]{1,2}/
@@ -46,6 +46,3 @@ class PortScanEngine
 		end
 	end
 end
-
-nmap = PortScanEngine.new
-nmap.port_detection

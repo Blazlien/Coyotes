@@ -78,9 +78,39 @@ class AttackEngine
 			end
 		end
 	end
-end
 
-attack = AttackEngine.new
-attack.banner_gathering
-attack.sslscan
-#attack.nikto
+	def wafw00f
+		dir_path = "#{@dir_root}/#{__method__}"
+		@project.mkdir(dir_path)
+		@ips.each do |ip|
+			ip = ip[0]
+			ports = @targets[[ip]]
+			ports.each do |port|
+				if port[0] == "tcp"
+					file_name = "#{__method__}-#{ip}_#{port[1]}-#{@time}"
+					file_path = "#{dir_path}/#{file_name}"
+					p "Execution: wafw00f -v -a #{ip}:#{port[1]} > #{file_path} 2>&1"
+					`wafw00f -v -a #{ip}:#{port[1]} > #{file_path} 2>&1`
+				end
+			end
+		end
+	end
+
+	def lbd
+		dir_path = "#{@dir_root}/#{__method__}"
+		@project.mkdir(dir_path)
+		@ips.each do |ip|
+			ip = ip[0]
+			ports = @targets[[ip]]
+			ports.each do |port|
+				if port[0] == "tcp" and port[1] =~ /80|443/
+					file_name = "#{__method__}-#{ip}_#{port[1]}-#{@time}"
+					file_path = "#{dir_path}/#{file_name}"
+					p "Execution: lbd #{ip} #{port[1]} > #{file_path} 2>&1"
+					`lbd #{ip} #{port[1]} > #{file_path} 2>&1`
+				end
+			end
+		end
+	end
+
+end
