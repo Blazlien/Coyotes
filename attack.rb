@@ -11,7 +11,7 @@ class AttackEngine
 		@time_now = Time.new
 		@time = @time_now.strftime("%Y%m%d_%H%M")
 		@port_scan_arg = "-v3 -Pn -T5 -A"
-		@targets = parser()
+		@targets = Parser.new.parser
 		@ips = @targets.keys
 		@ports = @targets.values
 		@dir_root = "data"
@@ -83,4 +83,4 @@ end
 attack = AttackEngine.new
 attack.banner_gathering
 attack.sslscan
-attack.nikto
+#attack.nikto
