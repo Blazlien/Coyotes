@@ -5,20 +5,21 @@ require 'nokogiri'
 
 class Parser
 	def initialize()
-		@file_path = "data/port_detection/"
-		@files = Dir.entries(@file_path)
-		@files.delete(".")
-		@files.delete("..")
 		@result_hash = {}
+		@dir_root = "data"
 	end
 
-	def parser()
-		@files.each do |file|
+	def port_scan()
+		file_path = "#{@dir_root}/port_detection/"
+		files = Dir.entries(file_path)
+		files.delete(".")
+		files.delete("..")
+		files.each do |file|
 			target_array = []
 			states_array = []
 			port_array = []
 	
-			absolute_path = @file_path + file
+			absolute_path = file_path + file
 			doc = File.open(absolute_path) { |f| Nokogiri::XML(f) }
 	
 			ip_address = doc.xpath("//address//@addr")
@@ -52,7 +53,21 @@ class Parser
 		@result_hash.delete_if { |key, value| value.to_s.strip == '[]' }
 		return @result_hash
 	end
+
+	def report
+		file_path = "#{@dir_root}/*/"
+		files = Dir.glob("#{file_path}*.xml")
+		port_scan.keys.each do |target|
+			target = target.join
+			target_file = files.grep /#{target}/
+			target_file.each do |file|
+			end
+		end
+		#files.each do |file|
+		#end
+	end
 end
 
-#parser = Parser.new
-#p parser.parser()
+parser = Parser.new
+#p parser.port_scan
+p parser.report
