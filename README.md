@@ -5,7 +5,7 @@
 Coyotes is a terminal penetration testing tool.
 
 ## Environment
-Unix like OS
+Unix like OS, 
 Kali linux (recommend)
 
 ## Installation
