@@ -1,8 +1,8 @@
 #! /usr/bin/env ruby
 # Author: Xan
 
-require './info_gather_engine'
-require './attack'
+require './lib/info_gather_engine'
+require './lib/attack'
 
 nmap = PortScanEngine.new(ARGV)
 nmap.port_detection
